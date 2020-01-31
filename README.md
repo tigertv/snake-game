@@ -1,5 +1,11 @@
 # Snake Game
 
+Install NCurses:
+
+```
+sudo apt install libncurses5-dev
+```
+
 Compile:
 
 ```
