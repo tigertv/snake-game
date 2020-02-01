@@ -4,7 +4,7 @@
 class BorderFrame {
 public:
     int width;
-	int height;
+    int height;
     int x;
     int y;
     BorderFrame(int x, int y, int width, int height);

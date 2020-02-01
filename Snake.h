@@ -10,20 +10,20 @@ enum Direction {
 class Snake {
 private:
     int length = 1;
-	Direction direction;
-	std::list<std::pair<int,int>> coords;
+    Direction direction;
+    std::list<std::pair<int,int>> coords;
     void go();
     void go(Direction direction);
     bool isGrowing = false;
-	
+
 public:
     Snake();
     virtual ~Snake();
     void update();
     std::pair<int, int>getHead();
     void grow();
-	int getLength();
-	std::list<std::pair<int,int>>* getCoordinates();
+    int getLength();
+    std::list<std::pair<int,int>>* getCoordinates();
     void changeDirection(Direction direction);
 };
 

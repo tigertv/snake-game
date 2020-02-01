@@ -9,7 +9,7 @@ class Game {
 private:
     Snake snake;
     int score = 0;
-	FoodBuilder foodBuilder;
+    FoodBuilder foodBuilder;
     Food* food = nullptr;
     BorderFrame borderFrame;
     const std::clock_t frame = 300000l;

@@ -1,11 +1,10 @@
 #include "Snake.h"
 
 Snake::Snake() {
-	direction = Direction::RIGHT;
-	// the beginning point of the snake
-	//auto p = std::make_pair(5,5);
-	std::pair<int,int> p = {5,5};
-	coords.push_front(p);
+    direction = Direction::RIGHT;
+    // the head of the snake
+    std::pair<int,int> p = {5,5};
+    coords.push_front(p);
 }
 
 Snake::~Snake() {
@@ -13,65 +12,65 @@ Snake::~Snake() {
 }
 
 void Snake::go(Direction direction) {
-	this->direction = direction;
-	this->go();
+    this->direction = direction;
+    this->go();
 }
 
 void Snake::go() {
-	std::pair<int,int> head = this->getHead();
-	int x = head.first;
-	int y = head.second;
+    std::pair<int,int> head = this->getHead();
+    int x = head.first;
+    int y = head.second;
 
-	switch(this->direction) {
-		case Direction::UP:
-			y--;
-			break;
-		case Direction::DOWN:
-			y++;
-			break;
-		case Direction::LEFT:
-			x--;
-			break;
-		case Direction::RIGHT:
-			x++;
-			break;
-	}
-	//head = std::make_pair(x, y);
-	head = {x, y};
-	coords.push_front(head);
+    switch(this->direction) {
+        case Direction::UP:
+            y--;
+            break;
+        case Direction::DOWN:
+            y++;
+            break;
+        case Direction::LEFT:
+            x--;
+            break;
+        case Direction::RIGHT:
+            x++;
+            break;
+    }
+    //head = std::make_pair(x, y);
+    head = {x, y};
+    coords.push_front(head);
 
-	if (this->isGrowing) {
-		this->length++;
-		this->isGrowing = false;
-	} else {
-		coords.pop_back();
-	}
-	
+    if (this->isGrowing) {
+        this->length++;
+        this->isGrowing = false;
+    } else {
+        coords.pop_back();
+    }
+
 }
 
 std::pair<int, int> Snake::getHead() {
-	return coords.front();
+    return coords.front();
 }
 
 void Snake::grow() {
-	this->isGrowing = true;
+    this->isGrowing = true;
 }
 
 int Snake::getLength() {
-	return this->length;
+    return this->length;
 }
 
 std::list<std::pair<int,int>>* Snake::getCoordinates() {
-	return &(this->coords);
+    return &(this->coords);
 }
 
 void Snake::update() {
-	this->go();
+    this->go();
 }
 
 void Snake::changeDirection(Direction direction) {
-	// forbid to go in the opposite way
-	if (direction == - this->direction) return;
-	
-	this->direction = direction;
+    // forbid to go in the opposite way
+    if (direction == - this->direction) return;
+
+    this->direction = direction;
 }
