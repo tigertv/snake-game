@@ -1,12 +1,16 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+class IWrapper;
+
+#include "IWrapper.h"
 #include "Snake.h"
 #include "FoodBuilder.h"
 #include "BorderFrame.h"
 
 class Game {
 private:
+    IWrapper* wrapper;
     Snake snake;
     int score = 0;
     FoodBuilder foodBuilder;
@@ -20,11 +24,17 @@ private:
     void update();
     void render();
     
+
 public:
     Game();
     virtual ~Game();
     void run();
     int getScore();
+    Snake* getSnake();
+    Food* getFood();
+    BorderFrame* getBorderFrame();
+    void setWrapper(IWrapper* wrapper);
+    void over();
 };
 
 #endif
