@@ -12,7 +12,7 @@ Food* FoodBuilder::getFood() {
     if (y == border->y) y++;
 
     if (this->food == nullptr) {
-        this->food = new Food(x, y);
+        this->food = new Food(x, y, 10);
     } else {
         this->food->x = x;
         this->food->y = y;

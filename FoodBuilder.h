@@ -7,7 +7,8 @@
 struct Food {
     int x;
     int y;
-    Food(int x, int y) : x(x), y(y) {}
+    int value;
+    Food(int x, int y, int value) : x(x), y(y), value(value) {}
 };
 
 class FoodBuilder{

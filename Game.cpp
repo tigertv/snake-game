@@ -133,7 +133,7 @@ void Game::update() {
     // has eaten food?
     if (head.first == food->x && head.second == food->y) {
         snake.grow();
-        this->score += 10;
+        this->score += food->value;
         food = foodBuilder.getFood();
     }
 }
