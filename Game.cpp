@@ -119,14 +119,10 @@ void Game::update() {
     }
 
     // border collision
-    if ((head.first == borderFrame.x && head.second >= borderFrame.y && 
-            head.second <= borderFrame.height) ||
-        (head.first == borderFrame.width && head.second >= borderFrame.y && 
-            head.second <= borderFrame.height) ||
-        (head.second == borderFrame.y && head.first >= borderFrame.x && 
-            head.first <= borderFrame.width) ||
-        (head.second == borderFrame.height && head.first >= borderFrame.x && 
-            head.first <= borderFrame.width)
+    if (((head.first == borderFrame.x || head.first == borderFrame.x + borderFrame.width) && 
+            head.second >= borderFrame.y && head.second < borderFrame.y + borderFrame.height) ||
+        ((head.second == borderFrame.y || head.second == borderFrame.y + borderFrame.height) && 
+            head.first >= borderFrame.x && head.first < borderFrame.x + borderFrame.width)
     ) {
         // you don't have to go out of the border space
         this->isPlaying = false;
@@ -165,13 +161,13 @@ void Game::render() {
 
     // render boarders
     attron(COLOR_PAIR(WALL_PAIR));
-    for(int x = borderFrame.x; x <= borderFrame.width; x++) {
+    for(int x = borderFrame.x; x <= borderFrame.x + borderFrame.width; x++) {
         mvaddch(borderFrame.y, x, 'x');
-        mvaddch(borderFrame.height, x, 'x');
+        mvaddch(borderFrame.y + borderFrame.height, x, 'x');
     }
-    for(int y = borderFrame.y; y <= borderFrame.height; y++) {
+    for(int y = borderFrame.y; y <= borderFrame.y + borderFrame.height; y++) {
         mvaddch(y, borderFrame.x, 'x');
-        mvaddch(y, borderFrame.width, 'x');
+        mvaddch(y, borderFrame.x + borderFrame.width, 'x');
     }
     attroff(COLOR_PAIR(WALL_PAIR));
 
