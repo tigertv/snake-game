@@ -1,14 +1,16 @@
 #include <iostream>
 #include "Game.h"
-#include "NCursesWrapper.h"
+#include "NCursesGraphics.h"
+#include "SdlGraphics.h"
 
 int main() {
     Game game;
-    IWrapper* wrapper = new NCursesWrapper();
-    game.setWrapper(wrapper);
+    //IGraphics* graphics = new NCursesGraphics();
+    IGraphics* graphics = new SdlGraphics();
+    game.setGraphics(graphics);
     game.run();
     int score = game.getScore();
     std::cout << "Score: " << score << std::endl;
-    delete wrapper;
+    delete graphics;
     return 0;
 }

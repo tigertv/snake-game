@@ -1,14 +1,14 @@
-#ifndef IWRAPPER_H_
-#define IWRAPPER_H_
+#ifndef IGRAPHICS_H_
+#define IGRAPHICS_H_
 
 class Game;
 #include "Game.h"
 
-class IWrapper {
+class IGraphics {
 protected:
     Game* game = nullptr;
 public:
-    virtual ~IWrapper() {};
+    virtual ~IGraphics() {};
     virtual void init() = 0;
     virtual void exit() = 0;
     virtual void render() = 0;

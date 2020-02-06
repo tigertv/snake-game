@@ -1,16 +1,16 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-class IWrapper;
+class IGraphics;
 
-#include "IWrapper.h"
+#include "IGraphics.h"
 #include "Snake.h"
 #include "FoodBuilder.h"
 #include "BorderFrame.h"
 
 class Game {
 private:
-    IWrapper* wrapper;
+    IGraphics* graphics;
     Snake snake;
     int score = 0;
     FoodBuilder foodBuilder;
@@ -33,7 +33,7 @@ public:
     Snake* getSnake();
     Food* getFood();
     BorderFrame* getBorderFrame();
-    void setWrapper(IWrapper* wrapper);
+    void setGraphics(IGraphics* graphics);
     void over();
 };
 

@@ -1,14 +1,14 @@
-#ifndef NCURSES_WRAPPER_H_
-#define NCURSES_WRAPPER_H_
+#ifndef NCURSES_GRAPHICS_H_
+#define NCURSES_GRAPHICS_H_
 
 class Game;
-#include "IWrapper.h"
+#include "IGraphics.h"
 #include "Game.h"
 
-class NCursesWrapper : public IWrapper {
+class NCursesGraphics : public IGraphics {
 
 public:
-    NCursesWrapper();
+    NCursesGraphics();
     void init() override;
     void exit() override;
     void render() override;

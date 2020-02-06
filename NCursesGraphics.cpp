@@ -1,4 +1,4 @@
-#include "NCursesWrapper.h"
+#include "NCursesGraphics.h"
 #include <ncurses.h>
 
 #define SNAKE_HEAD_PAIR 1
@@ -6,11 +6,11 @@
 #define WALL_PAIR 3
 #define FOOD_PAIR 4
 
-NCursesWrapper::NCursesWrapper() {
+NCursesGraphics::NCursesGraphics() {
 
 }
 
-void NCursesWrapper::init() {
+void NCursesGraphics::init() {
     // init
     initscr();
     // TODO check for failing
@@ -37,13 +37,13 @@ void NCursesWrapper::init() {
     init_pair(FOOD_PAIR, COLOR_RED, COLOR_BLACK);
 }
 
-void NCursesWrapper::exit() {
+void NCursesGraphics::exit() {
     erase();
     refresh();
     endwin();
 }
 
-void NCursesWrapper::render() {
+void NCursesGraphics::render() {
     // clear screen
     clear();
     Snake* snake = game->getSnake();
@@ -84,7 +84,7 @@ void NCursesWrapper::render() {
     attroff(COLOR_PAIR(FOOD_PAIR));
 }
 
-void NCursesWrapper::processInput() {
+void NCursesGraphics::processInput() {
     Snake* snake = game->getSnake();
     int c = getch();
 

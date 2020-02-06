@@ -1,4 +1,5 @@
 build/
+mybuild/
 .cproject
 .project
 .vscode/

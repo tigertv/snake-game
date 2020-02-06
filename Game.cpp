@@ -30,20 +30,20 @@ void Game::run() {
         usleep(diff);
     }
 
-    wrapper->exit();
+    graphics->exit();
 }
 
-void Game::setWrapper(IWrapper* wrapper) {
-    this->wrapper = wrapper;
-    wrapper->setGame(this);
+void Game::setGraphics(IGraphics* graphics) {
+    this->graphics = graphics;
+    graphics->setGame(this);
 }
 
 void Game::init() {
-    wrapper->init();
+    graphics->init();
 }
 
 void Game::processInput() {
-    wrapper->processInput();
+    graphics->processInput();
 }
 
 void Game::update() {
@@ -85,7 +85,7 @@ void Game::update() {
 }
 
 void Game::render() {
-    wrapper->render();
+    graphics->render();
 }
 
 int Game::getScore() {
