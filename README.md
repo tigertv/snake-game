@@ -22,3 +22,8 @@ Run:
 or
 ./snake-sdl
 ```
+
+## Screenshots
+
+![](screenshots/snake-ncurses.png)
+![](screenshots/snake-sdl.png)
