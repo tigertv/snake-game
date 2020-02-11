@@ -109,48 +109,32 @@ void SdlGraphics::processInput() {
         if (e.type == SDL_KEYDOWN) {
             Snake* snake = game->getSnake();
 
-            //SDL_BlitSurface(imgSurf, NULL, defaultSurface, NULL);
-            //SDL_UpdateWindowSurface(window);
+            switch(e.key.keysym.sym) {
+                case SDLK_LEFT:
+                    snake->changeDirection(Direction::LEFT); 
+                    break;
 
-            switch( e.key.keysym.sym ) {
-                case SDLK_LEFT: snake->changeDirection(Direction::LEFT); break;
-                case SDLK_RIGHT: snake->changeDirection(Direction::RIGHT); break;
-                case SDLK_UP: snake->changeDirection(Direction::UP); break;
-                case SDLK_DOWN: snake->changeDirection(Direction::DOWN); break;
-                case SDLK_1: snake->grow(); break;
-                case SDLK_ESCAPE: game->over(); break;
-                default: break;
+                case SDLK_RIGHT:
+                    snake->changeDirection(Direction::RIGHT);
+                    break;
+
+                case SDLK_UP:
+                    snake->changeDirection(Direction::UP);
+                    break;
+
+                case SDLK_DOWN:
+                    snake->changeDirection(Direction::DOWN);
+                    break;
+
+                case SDLK_1:
+                    snake->grow();
+                    break;
+
+                case SDLK_ESCAPE:
+                    game->over();
+                    break;
             }
         }
     }
-    /*
-    Snake* snake = game->getSnake();
-    int c = getch();
 
-    switch (c) {
-        case KEY_LEFT:
-            snake->changeDirection(Direction::LEFT);
-            break;
-
-        case KEY_DOWN:
-            snake->changeDirection(Direction::DOWN);
-            break;
-
-        case KEY_UP:
-            snake->changeDirection(Direction::UP);
-            break;
-
-        case KEY_RIGHT:
-            snake->changeDirection(Direction::RIGHT);
-            break;
-
-        case '1':
-            snake->grow();
-            break;
-
-        case 27: // KEY_ESC
-            game->over();
-            break;
-    }
-    //*/
 }
