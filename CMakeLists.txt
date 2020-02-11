@@ -17,7 +17,7 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 #include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
-set(SHARE_SRC_FILES FoodBuilder.cpp Game.cpp IGraphics.cpp BorderFrame.cpp Snake.cpp)
+set(SHARE_SRC_FILES FoodBuilder.cpp Game.cpp AbstractGraphics.cpp BorderFrame.cpp Snake.cpp)
 set(NCURSES_SRC_FILES ${SHARE_SRC_FILES} NCursesGraphics.cpp snake-ncurses.cpp)
 set(SDL2_SRC_FILES ${SHARE_SRC_FILES} SdlGraphics.cpp snake-sdl.cpp)
 add_executable(snake-ncurses ${NCURSES_SRC_FILES})

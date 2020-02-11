@@ -4,7 +4,7 @@
 
 int main() {
     Game game;
-    IGraphics* graphics = new NCursesGraphics();
+    AbstractGraphics* graphics = new NCursesGraphics();
     game.setGraphics(graphics);
     game.run();
     int score = game.getScore();

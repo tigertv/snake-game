@@ -33,7 +33,7 @@ void Game::run() {
     graphics->exit();
 }
 
-void Game::setGraphics(IGraphics* graphics) {
+void Game::setGraphics(AbstractGraphics* graphics) {
     this->graphics = graphics;
     graphics->setGame(this);
 }

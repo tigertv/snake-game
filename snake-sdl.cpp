@@ -4,7 +4,7 @@
 
 int main() {
     Game game;
-    IGraphics* graphics = new SdlGraphics();
+    AbstractGraphics* graphics = new SdlGraphics();
     game.setGraphics(graphics);
     game.run();
     int score = game.getScore();

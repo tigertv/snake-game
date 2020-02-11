@@ -1,9 +1,9 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-class IGraphics;
+class AbstractGraphics;
 
-#include "IGraphics.h"
+#include "AbstractGraphics.h"
 #include "Snake.h"
 #include "FoodBuilder.h"
 #include "BorderFrame.h"
@@ -14,7 +14,7 @@ enum class Key {
 
 class Game {
 private:
-    IGraphics* graphics;
+    AbstractGraphics* graphics;
     Snake snake;
     int score = 0;
     FoodBuilder foodBuilder;
@@ -37,7 +37,7 @@ public:
     Snake* getSnake();
     Food* getFood();
     BorderFrame* getBorderFrame();
-    void setGraphics(IGraphics* graphics);
+    void setGraphics(AbstractGraphics* graphics);
     void over();
     void keyPressed(Key key);
 };

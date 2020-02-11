@@ -4,10 +4,10 @@
 #include <SDL2/SDL.h> 
 
 class Game;
-#include "IGraphics.h"
+#include "AbstractGraphics.h"
 #include "Game.h"
 
-class SdlGraphics : public IGraphics {
+class SdlGraphics : public AbstractGraphics {
 private:
     SDL_Window *window = nullptr;
     SDL_Renderer *wrenderer = nullptr;

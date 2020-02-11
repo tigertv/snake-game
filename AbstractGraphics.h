@@ -1,5 +1,5 @@
-#ifndef IGRAPHICS_H_
-#define IGRAPHICS_H_
+#ifndef ABSTRACT_GRAPHICS_H_
+#define ABSTRACT_GRAPHICS_H_
 
 class Game;
 enum class Key;
@@ -7,12 +7,12 @@ enum class Key;
 #include "Game.h"
 #include <map>
 
-class IGraphics {
+class AbstractGraphics {
 protected:
     Game* game = nullptr;
     std::map<int, Key> keys;
 public:
-    virtual ~IGraphics() {};
+    virtual ~AbstractGraphics() {};
     virtual void init() = 0;
     virtual void exit() = 0;
     virtual void render() = 0;

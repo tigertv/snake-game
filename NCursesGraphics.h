@@ -2,10 +2,10 @@
 #define NCURSES_GRAPHICS_H_
 
 class Game;
-#include "IGraphics.h"
+#include "AbstractGraphics.h"
 #include "Game.h"
 
-class NCursesGraphics : public IGraphics {
+class NCursesGraphics : public AbstractGraphics {
 
 public:
     NCursesGraphics();
