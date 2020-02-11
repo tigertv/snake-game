@@ -2,11 +2,15 @@
 #define IGRAPHICS_H_
 
 class Game;
+enum class Key;
+
 #include "Game.h"
+#include <map>
 
 class IGraphics {
 protected:
     Game* game = nullptr;
+    std::map<int, Key> keys;
 public:
     virtual ~IGraphics() {};
     virtual void init() = 0;

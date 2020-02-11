@@ -35,6 +35,14 @@ void NCursesGraphics::init() {
     init_pair(WALL_PAIR, COLOR_CYAN, COLOR_MAGENTA);
     init_pair(SNAKE_BODY_PAIR, COLOR_GREEN, COLOR_BLACK);
     init_pair(FOOD_PAIR, COLOR_RED, COLOR_BLACK);
+
+    // init keys
+    keys[KEY_RIGHT] = Key::RIGHT;
+    keys[KEY_LEFT] = Key::LEFT;
+    keys[KEY_UP] = Key::UP;
+    keys[KEY_DOWN] = Key::DOWN;
+    keys['1'] = Key::KEY_1;
+    keys[27] = Key::ESC;
 }
 
 void NCursesGraphics::exit() {
@@ -85,32 +93,9 @@ void NCursesGraphics::render() {
 }
 
 void NCursesGraphics::processInput() {
-    Snake* snake = game->getSnake();
     int c = getch();
 
-    switch (c) {
-        case KEY_LEFT:
-            snake->changeDirection(Direction::LEFT);
-            break;
-
-        case KEY_DOWN:
-            snake->changeDirection(Direction::DOWN);
-            break;
-
-        case KEY_UP:
-            snake->changeDirection(Direction::UP);
-            break;
-
-        case KEY_RIGHT:
-            snake->changeDirection(Direction::RIGHT);
-            break;
-
-        case '1':
-            snake->grow();
-            break;
-
-        case 27: // KEY_ESC
-            game->over();
-            break;
+    if(this->keys.count(c)) {
+        game->keyPressed(keys[c]);
     }
 }

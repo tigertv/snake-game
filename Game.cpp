@@ -107,3 +107,31 @@ BorderFrame* Game::getBorderFrame() {
 void Game::over(){
     isPlaying = false;
 }
+
+void Game::keyPressed(Key key) {
+    switch(key) {
+        case Key::LEFT:
+            snake.changeDirection(Direction::LEFT); 
+            break;
+
+        case Key::RIGHT:
+            snake.changeDirection(Direction::RIGHT);
+            break;
+
+        case Key::UP:
+            snake.changeDirection(Direction::UP);
+            break;
+
+        case Key::DOWN:
+            snake.changeDirection(Direction::DOWN);
+            break;
+
+        case Key::KEY_1:
+            snake.grow();
+            break;
+
+        case Key::ESC:
+            this->over();
+            break;
+    }
+}

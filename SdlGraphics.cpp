@@ -27,6 +27,14 @@ void SdlGraphics::init() {
     }
 
     wrenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    // init keys
+    keys[SDLK_RIGHT] = Key::RIGHT;
+    keys[SDLK_LEFT] = Key::LEFT;
+    keys[SDLK_UP] = Key::UP;
+    keys[SDLK_DOWN] = Key::DOWN;
+    keys[SDLK_1] = Key::KEY_1;
+    keys[SDLK_ESCAPE] = Key::ESC;
 }
 
 void SdlGraphics::exit() {
@@ -107,32 +115,9 @@ void SdlGraphics::processInput() {
         }
 
         if (e.type == SDL_KEYDOWN) {
-            Snake* snake = game->getSnake();
-
-            switch(e.key.keysym.sym) {
-                case SDLK_LEFT:
-                    snake->changeDirection(Direction::LEFT); 
-                    break;
-
-                case SDLK_RIGHT:
-                    snake->changeDirection(Direction::RIGHT);
-                    break;
-
-                case SDLK_UP:
-                    snake->changeDirection(Direction::UP);
-                    break;
-
-                case SDLK_DOWN:
-                    snake->changeDirection(Direction::DOWN);
-                    break;
-
-                case SDLK_1:
-                    snake->grow();
-                    break;
-
-                case SDLK_ESCAPE:
-                    game->over();
-                    break;
+            SDL_Keycode key = e.key.keysym.sym;
+            if(this->keys.count(key)) {
+                game->keyPressed(keys[key]);
             }
         }
     }

@@ -8,6 +8,10 @@ class IGraphics;
 #include "FoodBuilder.h"
 #include "BorderFrame.h"
 
+enum class Key {
+    LEFT, RIGHT, UP, DOWN, ESC, KEY_1 
+};
+
 class Game {
 private:
     IGraphics* graphics;
@@ -35,6 +39,7 @@ public:
     BorderFrame* getBorderFrame();
     void setGraphics(IGraphics* graphics);
     void over();
+    void keyPressed(Key key);
 };
 
 #endif
