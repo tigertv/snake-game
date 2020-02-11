@@ -58,13 +58,13 @@ void SdlGraphics::render() {
     std::list<std::pair<int, int>> *coords = snake->getCoordinates();
     std::list<std::pair<int, int>>::iterator it = coords->begin();
     
-    const int cellSize = 15;
+    const int cellSize = 14;
     
     // render head
     SDL_SetRenderDrawColor(wrenderer, 0, 255, 0, 0);
     SDL_Rect rect;
-    rect.x = it->first * cellSize;
-    rect.y = it->second * cellSize;
+    rect.x = it->first * (cellSize + 1);
+    rect.y = it->second * (cellSize + 1);
     rect.w = cellSize;
     rect.h = cellSize;
     SDL_RenderFillRect(wrenderer, &rect);
@@ -72,34 +72,34 @@ void SdlGraphics::render() {
     // render body
     SDL_SetRenderDrawColor(wrenderer, 0, 235, 60, 255);
     for(it++; it != coords->end(); it++) {
-        rect.x = it->first * cellSize;
-        rect.y = it->second * cellSize;
+        rect.x = it->first * (cellSize + 1);
+        rect.y = it->second * (cellSize + 1);
         SDL_RenderFillRect(wrenderer, &rect);
     }
 
     // render boarders
     SDL_SetRenderDrawColor(wrenderer, 15, 56, 66, 255);
     for(int x = borderFrame->x; x <= borderFrame->x + borderFrame->width; x++) {
-        rect.x = x * cellSize;
-        rect.y = borderFrame->y * cellSize;
+        rect.x = x * (cellSize + 1);
+        rect.y = borderFrame->y * (cellSize + 1);
         SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = x * cellSize;
-        rect.y = (borderFrame->y + borderFrame->height) * cellSize;
+        rect.x = x * (cellSize + 1);
+        rect.y = (borderFrame->y + borderFrame->height) * (cellSize + 1);
         SDL_RenderFillRect(wrenderer, &rect);
     }
     for(int y = borderFrame->y; y <= borderFrame->y + borderFrame->height; y++) {
-        rect.x = borderFrame->x * cellSize;
-        rect.y = y * cellSize;
+        rect.x = borderFrame->x * (cellSize + 1);
+        rect.y = y * (cellSize + 1);
         SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = (borderFrame->x + borderFrame->width) * cellSize;
-        rect.y = y * cellSize;
+        rect.x = (borderFrame->x + borderFrame->width) * (cellSize + 1);
+        rect.y = y * (cellSize + 1);
         SDL_RenderFillRect(wrenderer, &rect);
     }
     
     // render food
     SDL_SetRenderDrawColor(wrenderer, 255, 0, 0, 255);
-    rect.x = food->x * cellSize;
-    rect.y = food->y * cellSize;
+    rect.x = food->x * (cellSize + 1);
+    rect.y = food->y * (cellSize + 1);
     SDL_RenderFillRect(wrenderer, &rect);
     
     SDL_RenderPresent(wrenderer);
