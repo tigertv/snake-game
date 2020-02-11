@@ -2,10 +2,7 @@
 #define SDL_GRAPHICS_H_
 
 #include <SDL2/SDL.h> 
-
-class Game;
 #include "AbstractGraphics.h"
-#include "Game.h"
 
 class SdlGraphics : public AbstractGraphics {
 private:
