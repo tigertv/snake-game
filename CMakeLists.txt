@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 #add_compile_options(-Wall -Wextra -pedantic -g)
 
-
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall  -Wextra -pedantic -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Wextra -pedantic")
 
@@ -17,11 +16,11 @@ find_package(SDL2 REQUIRED)
 #find_package(SDL2_image )
 include_directories(${SDL2_INCLUDE_DIRS})
 #include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
-#include_directories(${SDL_INCLUDE_DIRS})
 
-file(GLOB SRC_FILES "*.cpp")
-
-add_executable(snake-game ${SRC_FILES})
-#target_link_libraries(snake-game ${CURSES_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
-target_link_libraries(snake-game ${CURSES_LIBRARIES} ${SDL2_LIBRARIES})
-#target_link_libraries(snake-game ${CURSES_LIBRARIES} ${SDL_LIBRARY})
+set(SHARE_SRC_FILES FoodBuilder.cpp Game.cpp IGraphics.cpp BorderFrame.cpp Snake.cpp)
+set(NCURSES_SRC_FILES ${SHARE_SRC_FILES} NCursesGraphics.cpp snake-ncurses.cpp)
+set(SDL2_SRC_FILES ${SHARE_SRC_FILES} SdlGraphics.cpp snake-sdl.cpp)
+add_executable(snake-ncurses ${NCURSES_SRC_FILES})
+add_executable(snake-sdl ${SDL2_SRC_FILES})
+target_link_libraries(snake-ncurses ${CURSES_LIBRARIES})
+target_link_libraries(snake-sdl ${SDL2_LIBRARIES})

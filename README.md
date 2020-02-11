@@ -18,5 +18,7 @@ make
 Run:
 
 ```
-./snake-game
+./snake-ncurses
+or
+./snake-sdl
 ```

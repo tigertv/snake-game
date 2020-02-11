@@ -1,11 +1,9 @@
 #include <iostream>
 #include "Game.h"
-#include "NCursesGraphics.h"
 #include "SdlGraphics.h"
 
 int main() {
     Game game;
-    //IGraphics* graphics = new NCursesGraphics();
     IGraphics* graphics = new SdlGraphics();
     game.setGraphics(graphics);
     game.run();
