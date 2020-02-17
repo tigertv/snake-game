@@ -1,6 +1,8 @@
 # Snake Game
 
-Install NCurses and SDL2:
+Install at least one of the libraries:  
+  * NCurses  
+  * SDL2  
 
 ```
 sudo apt install libncurses5-dev libsdl2-dev
@@ -18,6 +20,8 @@ make
 Run:
 
 ```
+cd src
+
 ./snake-ncurses
 or
 ./snake-sdl
