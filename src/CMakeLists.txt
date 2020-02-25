@@ -45,6 +45,9 @@ else()
     message(WARNING "OpenGL and Glut are not found.")
 endif()
 
-if(NOT(Curses_FOUND OR SDL2_FOUND OR (OpenGL_FOUND AND GLUT_FOUND)))
-    message(FATAL_ERROR "You have to install at least one of the packages!")
-endif()
+#if(NOT(Curses_FOUND OR SDL2_FOUND OR (OpenGL_FOUND AND GLUT_FOUND)))
+#    message(FATAL_ERROR "You have to install at least one of the packages!")
+#endif()
+
+set(NO_LIB_LINUX_SRC_FILES graphics/NoLibLinuxGraphics.cpp snake-nolib-lnx.cpp)
+add_executable(snake-nolib-lnx $<TARGET_OBJECTS:shareobjects> ${NO_LIB_LINUX_SRC_FILES})
