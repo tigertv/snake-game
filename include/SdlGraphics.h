@@ -8,7 +8,10 @@ class SdlGraphics : public AbstractGraphics {
 private:
     SDL_Window *window = nullptr;
     SDL_Renderer *wrenderer = nullptr;
-    
+    SDL_Rect destR;
+    SDL_Rect srcR;
+    SDL_Texture* sprite;
+
 public:
     SdlGraphics();
     void init() override;

@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <unistd.h>
 
-Game::Game() : foodBuilder(&borderFrame), borderFrame(0, 0, 64, 32) {
+Game::Game() : foodBuilder(&borderFrame), borderFrame(0, 0, 32, 32) {
 
 }
 

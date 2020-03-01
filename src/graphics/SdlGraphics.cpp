@@ -1,6 +1,7 @@
 #include "SdlGraphics.h"
 #include <SDL2/SDL.h> 
-
+#include <SDL2/SDL_image.h>
+#include <iostream>
 
 SdlGraphics::SdlGraphics() {
 
@@ -26,6 +27,19 @@ void SdlGraphics::init() {
 
     wrenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    // load sample.png into image
+    SDL_Surface *image = IMG_Load("images/snake-tiles.png");
+    sprite = SDL_CreateTextureFromSurface(wrenderer, image);
+    SDL_FreeSurface(image);
+
+    destR.x = 100;
+    destR.y = 100;
+    destR.w = 70;
+    destR.h = 70;
+    
+    srcR.w = 64;
+    srcR.h = 64;
+
     // init keys
     keys[SDLK_RIGHT] = Key::RIGHT;
     keys[SDLK_LEFT] = Key::LEFT;
@@ -36,6 +50,7 @@ void SdlGraphics::init() {
 }
 
 void SdlGraphics::exit() {
+    SDL_DestroyTexture(sprite);
     SDL_DestroyRenderer(wrenderer);
     wrenderer = NULL;
     SDL_DestroyWindow(window);
@@ -44,6 +59,7 @@ void SdlGraphics::exit() {
 }
 
 void SdlGraphics::render() {
+    constexpr int tileSize = 64;
 
     SDL_SetRenderDrawColor( wrenderer, 0, 0, 0, 255);
     SDL_RenderClear(wrenderer);
@@ -53,53 +69,111 @@ void SdlGraphics::render() {
     Food* food = game->getFood();
 
     // render snake
-    std::list<std::pair<int, int>> *coords = snake->getCoordinates();
-    std::list<std::pair<int, int>>::iterator it = coords->begin();
-    
-    const int cellSize = 14;
+    std::deque<SnakeBodyPart> *parts = snake->getBodyParts();
+
+    const int cellSize = 20;
     
     // render head
-    SDL_SetRenderDrawColor(wrenderer, 0, 255, 0, 0);
     SDL_Rect rect;
-    rect.x = it->first * (cellSize + 1);
-    rect.y = it->second * (cellSize + 1);
+    rect.x = (*parts)[0].point.x * cellSize;
+    rect.y = (*parts)[0].point.y * cellSize;
     rect.w = cellSize;
     rect.h = cellSize;
-    SDL_RenderFillRect(wrenderer, &rect);
+    destR = rect;
 
-    // render body
-    SDL_SetRenderDrawColor(wrenderer, 0, 235, 60, 255);
-    for(it++; it != coords->end(); it++) {
-        rect.x = it->first * (cellSize + 1);
-        rect.y = it->second * (cellSize + 1);
-        SDL_RenderFillRect(wrenderer, &rect);
+    SnakeBodyPart* part = &(*parts)[0];
+    if (part->direction.x == 1) {
+        srcR.x = 4;
+        srcR.y = 0;
+    } else if (part->direction.x == -1) {
+        srcR.x = 3;
+        srcR.y = 1;
+    } else if (part->direction.y == 1) {
+        srcR.x = 4;
+        srcR.y = 1;
+    } else {
+        srcR.x = 3;
+        srcR.y = 0;
+    }
+
+    srcR.x *= tileSize;
+    srcR.y *= tileSize;
+    SDL_RenderCopy(wrenderer, this->sprite, &srcR, &destR);
+
+    // render body  
+    int size = (*parts).size();
+    int i = 1;
+    for (; i < size - 1; i++) {
+        part = &(*parts)[i];
+        
+        rect.x = part->point.x * cellSize;
+        rect.y = part->point.y * cellSize;
+        destR = rect;
+
+        srcR.x = 1 + part->direction.x;
+        srcR.y = 1 + part->direction.y;
+        srcR.x *= tileSize;
+        srcR.y *= tileSize;
+        SDL_RenderCopy(wrenderer, this->sprite, &srcR, &destR);
+    }
+
+    // render tail
+    if (i > 0) {
+        part = &(*parts)[i];
+        
+        rect.x = part->point.x * cellSize;
+        rect.y = part->point.y * cellSize;
+        destR = rect;
+        
+        if (part->direction.x == 1) {
+            srcR.x = 4;
+            srcR.y = 2;
+        } else if (part->direction.x == -1) {
+            srcR.x = 3;
+            srcR.y = 3;
+        } else if (part->direction.y == 1) {
+            srcR.x = 4;
+            srcR.y = 3;
+        } else {
+            srcR.x = 3;
+            srcR.y = 2;
+        }
+
+        srcR.x *= tileSize;
+        srcR.y *= tileSize;
+        SDL_RenderCopy(wrenderer, this->sprite, &srcR, &destR);
     }
 
     // render boarders
     SDL_SetRenderDrawColor(wrenderer, 15, 56, 66, 255);
     for(int x = borderFrame->x; x <= borderFrame->x + borderFrame->width; x++) {
-        rect.x = x * (cellSize + 1);
-        rect.y = borderFrame->y * (cellSize + 1);
+        rect.x = x * (cellSize + 0);
+        rect.y = borderFrame->y * (cellSize + 0);
         SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = x * (cellSize + 1);
-        rect.y = (borderFrame->y + borderFrame->height) * (cellSize + 1);
+        rect.x = x * (cellSize + 0);
+        rect.y = (borderFrame->y + borderFrame->height) * (cellSize + 0);
         SDL_RenderFillRect(wrenderer, &rect);
     }
     for(int y = borderFrame->y; y <= borderFrame->y + borderFrame->height; y++) {
-        rect.x = borderFrame->x * (cellSize + 1);
-        rect.y = y * (cellSize + 1);
+        rect.x = borderFrame->x * cellSize;
+        rect.y = y * (cellSize + 0);
         SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = (borderFrame->x + borderFrame->width) * (cellSize + 1);
-        rect.y = y * (cellSize + 1);
+        rect.x = (borderFrame->x + borderFrame->width) * cellSize;
+        rect.y = y * cellSize;
         SDL_RenderFillRect(wrenderer, &rect);
     }
     
     // render food
-    SDL_SetRenderDrawColor(wrenderer, 255, 0, 0, 255);
-    rect.x = food->x * (cellSize + 1);
-    rect.y = food->y * (cellSize + 1);
-    SDL_RenderFillRect(wrenderer, &rect);
+    rect.x = food->x * cellSize;
+    rect.y = food->y * cellSize;
+    destR = rect;
+    srcR.x = 0;
+    srcR.y = tileSize * 3;
+    srcR.w = tileSize;
+    srcR.h = tileSize;
+    SDL_RenderCopy(wrenderer, this->sprite, &srcR, &destR);
     
+    // give sdl to know when to render
     SDL_RenderPresent(wrenderer);
 }
 
