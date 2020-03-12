@@ -74,27 +74,14 @@ void SdlGraphics::render() {
     const int cellSize = 20;
     
     // render head
-    SDL_Rect rect;
-    rect.x = (*parts)[0].point.x * cellSize;
-    rect.y = (*parts)[0].point.y * cellSize;
-    rect.w = cellSize;
-    rect.h = cellSize;
-    destR = rect;
-
     SnakeBodyPart* part = &(*parts)[0];
-    if (part->direction.x == 1) {
-        srcR.x = 4;
-        srcR.y = 0;
-    } else if (part->direction.x == -1) {
-        srcR.x = 3;
-        srcR.y = 1;
-    } else if (part->direction.y == 1) {
-        srcR.x = 4;
-        srcR.y = 1;
-    } else {
-        srcR.x = 3;
-        srcR.y = 0;
-    }
+    destR.x = part->point.x * cellSize;
+    destR.y = part->point.y * cellSize;
+    destR.w = cellSize;
+    destR.h = cellSize;
+    
+    srcR.x = 4 + part->direction.x;
+    srcR.y = 1 + part->direction.y;
 
     srcR.x *= tileSize;
     srcR.y *= tileSize;
@@ -106,10 +93,9 @@ void SdlGraphics::render() {
     for (; i < size - 1; i++) {
         part = &(*parts)[i];
         
-        rect.x = part->point.x * cellSize;
-        rect.y = part->point.y * cellSize;
-        destR = rect;
-
+        destR.x = part->point.x * cellSize;
+        destR.y = part->point.y * cellSize;
+        
         srcR.x = 1 + part->direction.x;
         srcR.y = 1 + part->direction.y;
         srcR.x *= tileSize;
@@ -121,23 +107,11 @@ void SdlGraphics::render() {
     if (i > 0) {
         part = &(*parts)[i];
         
-        rect.x = part->point.x * cellSize;
-        rect.y = part->point.y * cellSize;
-        destR = rect;
+        destR.x = part->point.x * cellSize;
+        destR.y = part->point.y * cellSize;
         
-        if (part->direction.x == 1) {
-            srcR.x = 4;
-            srcR.y = 2;
-        } else if (part->direction.x == -1) {
-            srcR.x = 3;
-            srcR.y = 3;
-        } else if (part->direction.y == 1) {
-            srcR.x = 4;
-            srcR.y = 3;
-        } else {
-            srcR.x = 3;
-            srcR.y = 2;
-        }
+        srcR.x = 5 - part->direction.x;
+        srcR.y = 1 - part->direction.y;
 
         srcR.x *= tileSize;
         srcR.y *= tileSize;
@@ -147,28 +121,27 @@ void SdlGraphics::render() {
     // render boarders
     SDL_SetRenderDrawColor(wrenderer, 15, 56, 66, 255);
     for(int x = borderFrame->x; x <= borderFrame->x + borderFrame->width; x++) {
-        rect.x = x * (cellSize + 0);
-        rect.y = borderFrame->y * (cellSize + 0);
-        SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = x * (cellSize + 0);
-        rect.y = (borderFrame->y + borderFrame->height) * (cellSize + 0);
-        SDL_RenderFillRect(wrenderer, &rect);
+        destR.x = x * (cellSize + 0);
+        destR.y = borderFrame->y * (cellSize + 0);
+        SDL_RenderFillRect(wrenderer, &destR);
+        destR.x = x * (cellSize + 0);
+        destR.y = (borderFrame->y + borderFrame->height) * (cellSize + 0);
+        SDL_RenderFillRect(wrenderer, &destR);
     }
     for(int y = borderFrame->y; y <= borderFrame->y + borderFrame->height; y++) {
-        rect.x = borderFrame->x * cellSize;
-        rect.y = y * (cellSize + 0);
-        SDL_RenderFillRect(wrenderer, &rect);
-        rect.x = (borderFrame->x + borderFrame->width) * cellSize;
-        rect.y = y * cellSize;
-        SDL_RenderFillRect(wrenderer, &rect);
+        destR.x = borderFrame->x * cellSize;
+        destR.y = y * (cellSize + 0);
+        SDL_RenderFillRect(wrenderer, &destR);
+        destR.x = (borderFrame->x + borderFrame->width) * cellSize;
+        destR.y = y * cellSize;
+        SDL_RenderFillRect(wrenderer, &destR);
     }
     
     // render food
-    rect.x = food->x * cellSize;
-    rect.y = food->y * cellSize;
-    destR = rect;
-    srcR.x = 0;
-    srcR.y = tileSize * 3;
+    destR.x = food->x * cellSize;
+    destR.y = food->y * cellSize;
+    srcR.x = tileSize * 3;
+    srcR.y = 0;
     srcR.w = tileSize;
     srcR.h = tileSize;
     SDL_RenderCopy(wrenderer, this->sprite, &srcR, &destR);
