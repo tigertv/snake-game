@@ -24,36 +24,38 @@ void Snake::go(Direction direction) {
 }
 
 void Snake::go() {
-    SnakeBodyPart addHead;
-    addHead.direction.x = 0;
-    addHead.direction.y = 0;
+    SnakeBodyPart head;
+    head.direction.x = 0;
+    head.direction.y = 0;
 
     switch(this->direction) {
         case Direction::UP:
-            addHead.direction.y = -1;
+            head.direction.y = -1;
             break;
         case Direction::DOWN:
-            addHead.direction.y = 1;
+            head.direction.y = 1;
             break;
         case Direction::LEFT:
-            addHead.direction.x = -1;
+            head.direction.x = -1;
             break;
         case Direction::RIGHT:
-            addHead.direction.x = 1;
+            head.direction.x = 1;
             break;
     }
 
-    addHead.point.x = bodyParts[0].point.x + addHead.direction.x;
-    addHead.point.y = bodyParts[0].point.y + addHead.direction.y;
+    head.point.x = bodyParts[0].point.x + head.direction.x;
+    head.point.y = bodyParts[0].point.y + head.direction.y;
     
-    if ((addHead.direction.x != bodyParts[0].direction.x) && 
-        (addHead.direction.y != bodyParts[0].direction.y)) {
+    // change direction of the part following the head if
+    // the part is in a corner
+    if ((head.direction.x != bodyParts[0].direction.x) && 
+        (head.direction.y != bodyParts[0].direction.y)) {
         
-        bodyParts[0].direction.x -= addHead.direction.x;
-        bodyParts[0].direction.y -= addHead.direction.y;
+        bodyParts[0].direction.x -= head.direction.x;
+        bodyParts[0].direction.y -= head.direction.y;
     }
     
-    bodyParts.push_front(addHead);
+    bodyParts.push_front(head);
 
     if (this->isGrowing) {
         this->isGrowing = false;
@@ -63,9 +65,10 @@ void Snake::go() {
         bodyParts.pop_back();
 
         // change direction of the tail if it is on a corner
-        if ((bodyParts.back().direction.x != 0) && (bodyParts.back().direction.y != 0)) {
-            bodyParts.back().direction.x = x - bodyParts.back().direction.x;
-            bodyParts.back().direction.y = y - bodyParts.back().direction.y;
+        SnakeBodyPart& part = bodyParts.back();
+        if ((part.direction.x != 0) && (part.direction.y != 0)) {
+            part.direction.x = x - part.direction.x;
+            part.direction.y = y - part.direction.y;
         }
         
     }
