@@ -17,7 +17,7 @@ Compile:
 mkdir build
 cd build
 cmake ..
-make
+make [all|snake-sdl|snake-ncurses|snake-glut|snake-nolib-lnx]
 ```
 
 Run:
