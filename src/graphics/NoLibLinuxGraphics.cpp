@@ -77,17 +77,19 @@ void NoLibLinuxGraphics::render() {
     std::system("clear");
     
     // render snake
-    std::list<std::pair<int, int>> *coords = snake->getCoordinates();
-    std::list<std::pair<int, int>>::iterator it = coords->begin();
+    std::deque<SnakeBodyPart> *parts = snake->getBodyParts();
+    SnakeBodyPart* part = &(*parts)[0];
     
     // render head
     std::cout << "\033[1;33m"; // change color
-    renderChar(it->first, it->second, '@');
+    renderChar(part->point.x, part->point.y, '@');
 
     // render body
     std::cout << "\033[1;32m"; // change color
-    for(it++; it != coords->end(); it++) {
-        renderChar(it->first, it->second, 'o');
+    int size = parts->size();
+    for (int i = 1; i < size; i++) {
+        part = &(*parts)[i];
+        renderChar(part->point.x, part->point.y, 'o');
     }
 
     // render boarders

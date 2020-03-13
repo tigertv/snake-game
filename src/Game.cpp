@@ -50,25 +50,25 @@ void Game::update() {
     snake.update();
 
     // collisions?
-    std::pair<int,int> head = snake.getHead();
+    std::deque<SnakeBodyPart> *parts = snake.getBodyParts();
+    SnakeBodyPart* head = &(*parts)[0];
     
     // itself collision
-    std::list<std::pair<int, int>> *coords = snake.getCoordinates();
-    std::list<std::pair<int, int>>::iterator it = coords->begin();
-    for(it++; it != coords->end(); it++) {
-        if (it->first == head.first && it->second == head.second) {
-            // we have a collision
-            this->isPlaying = false;
+    int size = (int)parts->size();
+    for(int i = 1; i < size; i++) {
+        SnakeBodyPart& part = (*parts)[i];
+        if(part.point.x == head->point.x && part.point.y == head->point.y) {
             // game over
+            this->isPlaying = false;
             return;
         }
     }
 
     // border collision
-    if (((head.first == borderFrame.x || head.first == borderFrame.x + borderFrame.width) && 
-            head.second >= borderFrame.y && head.second < borderFrame.y + borderFrame.height) ||
-        ((head.second == borderFrame.y || head.second == borderFrame.y + borderFrame.height) && 
-            head.first >= borderFrame.x && head.first < borderFrame.x + borderFrame.width)
+    if(((head->point.x == borderFrame.x || head->point.x == borderFrame.x + borderFrame.width) && 
+            head->point.y >= borderFrame.y && head->point.y < borderFrame.y + borderFrame.height) ||
+        ((head->point.y == borderFrame.y || head->point.y == borderFrame.y + borderFrame.height) && 
+            head->point.x >= borderFrame.x && head->point.x < borderFrame.x + borderFrame.width)
     ) {
         // you don't have to go out of the border space
         this->isPlaying = false;
@@ -77,7 +77,7 @@ void Game::update() {
     }
 
     // has eaten food?
-    if (head.first == food->x && head.second == food->y) {
+    if (head->point.x == food->x && head->point.y == food->y) {
         snake.grow();
         this->score += food->value;
         food = foodBuilder.getFood();

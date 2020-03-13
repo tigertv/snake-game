@@ -59,18 +59,20 @@ void NCursesGraphics::render() {
     Food* food = game->getFood();
 
     // render snake
-    std::list<std::pair<int, int>> *coords = snake->getCoordinates();
-    std::list<std::pair<int, int>>::iterator it = coords->begin();
+    std::deque<SnakeBodyPart> *parts = snake->getBodyParts();
+    SnakeBodyPart* part = &(*parts)[0];
     
     // render head
     attron(COLOR_PAIR(SNAKE_HEAD_PAIR));
-    mvaddch(it->second, it->first, '@');
+    mvaddch(part->point.y, part->point.x, '@');
     attroff(COLOR_PAIR(SNAKE_HEAD_PAIR));
 
     // render body
     attron(COLOR_PAIR(SNAKE_BODY_PAIR));
-    for(it++; it != coords->end(); it++) {
-        mvaddch(it->second, it->first, 'o');
+    int size = parts->size();
+    for (int i = 1; i < size; i++) {
+        part = &(*parts)[i];
+        mvaddch(part->point.y, part->point.x, 'o');
     }
     attroff(COLOR_PAIR(SNAKE_BODY_PAIR));
 

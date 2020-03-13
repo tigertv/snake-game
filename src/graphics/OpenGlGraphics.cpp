@@ -51,19 +51,21 @@ void OpenGlGraphics::render() {
     Food* food = game->getFood();
 
     // render snake
-    std::list<std::pair<int, int>> *coords = snake->getCoordinates();
-    std::list<std::pair<int, int>>::iterator it = coords->begin();
+    std::deque<SnakeBodyPart> *parts = snake->getBodyParts();
+    SnakeBodyPart* part = &(*parts)[0];
     
     const int cellSize = 1;
     
     // render head
     u_int color = 0x00ff10;
-    this->renderBox(it->first, it->second, cellSize, color);
+    this->renderBox(part->point.x, part->point.y, cellSize, color);
 
     // render body
     color = 0x00ea3c;
-    for(it++; it != coords->end(); it++) {
-        this->renderBox(it->first, it->second, cellSize, color);
+    int size = parts->size();
+    for (int i = 1; i < size; i++) {
+        part = &(*parts)[i];
+        this->renderBox(part->point.x, part->point.y, cellSize, color);
     }
 
     // render boarders
