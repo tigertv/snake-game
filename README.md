@@ -36,5 +36,5 @@ or
 
 ## Screenshots
 
-![](screenshots/snake-ncurses.png)
 ![](screenshots/snake-sdl.png)
+![](screenshots/snake-ncurses.png)

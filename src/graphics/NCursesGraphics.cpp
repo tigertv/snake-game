@@ -72,7 +72,22 @@ void NCursesGraphics::render() {
     int size = parts->size();
     for (int i = 1; i < size; i++) {
         part = &(*parts)[i];
-        mvaddch(part->point.y, part->point.x, 'o');
+
+        char c;
+        if (part->direction.x == 1 && part->direction.y == 0) {
+            c = '>';
+        } else if (part->direction.x == -1  && part->direction.y == 0) {
+            c = '<';
+        } else if (part->direction.y == 1 && part->direction.x == 0) {
+            c = 'v';
+        } else if (part->direction.y == -1 && part->direction.x == 0) {
+            c = '^';
+        } else if (part->direction.x == part->direction.y) {
+            c = '/';
+        } else {
+            c = '\\';
+        }
+        mvaddch(part->point.y, part->point.x, c);
     }
     attroff(COLOR_PAIR(SNAKE_BODY_PAIR));
 

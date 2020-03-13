@@ -89,7 +89,22 @@ void NoLibLinuxGraphics::render() {
     int size = parts->size();
     for (int i = 1; i < size; i++) {
         part = &(*parts)[i];
-        renderChar(part->point.x, part->point.y, 'o');
+        
+        char c;
+        if (part->direction.x == 1 && part->direction.y == 0) {
+            c = '>';
+        } else if (part->direction.x == -1  && part->direction.y == 0) {
+            c = '<';
+        } else if (part->direction.y == 1 && part->direction.x == 0) {
+            c = 'v';
+        } else if (part->direction.y == -1 && part->direction.x == 0) {
+            c = '^';
+        } else if (part->direction.x == part->direction.y) {
+            c = '/';
+        } else {
+            c = '\\';
+        }
+        renderChar(part->point.x, part->point.y, c);
     }
 
     // render boarders
