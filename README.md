@@ -2,13 +2,13 @@
 
 Install at least one of the libraries:  
   * NCurses  
-  * SDL2  
+  * SDL2, SDL2-image
   * freeglut  
 
 Or compile without libs for linux.
 
 ```
-sudo apt install libncurses5-dev libsdl2-dev freeglut3-dev
+sudo apt install libncurses5-dev freeglut3-dev libsdl2-dev libsdl2-image-dev
 ```
 
 Compile:
